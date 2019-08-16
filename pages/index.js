@@ -23,22 +23,19 @@ export default class CampaignIndex extends React.Component {
 
     render() {
         return (
-            <div>
-                <Layout>
-                    <Container>
-                        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
-                        <h3>OPEN CAMPAIGNS</h3>
-                        <Button 
-                            content='Create New Campaign' 
-                            icon='add circle' 
-                            labelPosition='right' 
-                            primary
-                            floated='right'
-                        />
-                        <p>{this.renderCampaigns()}</p>
-                    </Container>
-                </Layout>
-            </div>
+            <Layout>
+                <div>
+                    <h3>OPEN CAMPAIGNS</h3>
+                    <Button 
+                        content='Create New Campaign' 
+                        icon='add circle' 
+                        labelPosition='right' 
+                        primary
+                        floated='right'
+                    />
+                    <p>{this.renderCampaigns()}</p>
+                </div>
+            </Layout>
         )
     };
 };

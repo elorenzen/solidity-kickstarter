@@ -1,5 +1,6 @@
 import React from 'react';
-import { Menu, Button } from 'semantic-ui-react';
+import { Menu } from 'semantic-ui-react';
+import Head from 'next/head';
 
 const Header = () => {
     return (
