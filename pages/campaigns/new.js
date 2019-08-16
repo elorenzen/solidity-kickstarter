@@ -7,12 +7,14 @@ import web3 from '../../ethereum/web3';
 export default class CampaignNew extends React.Component {
     state = {
         minimumContribution: '',
-        errorMessage: ''
+        errorMessage: '',
+        loading: false
     };
 
     onSubmit = async (event) => {
         event.preventDefault();
     
+        this.setState({ loading: true, errorMessage: '' });
         try {
             const accounts = await web3.eth.getAccounts();
             await factory.methods.createCampaign(this.state.minimumContribution)
@@ -22,6 +24,7 @@ export default class CampaignNew extends React.Component {
         } catch (err) {
             this.setState({ errorMessage: err.message });
         }
+        this.setState({ loading: false });
     }
 
     render() {
@@ -48,7 +51,12 @@ export default class CampaignNew extends React.Component {
                             header='Uh-oh!'
                             content={this.state.errorMessage}
                         />
-                        <Button primary>Create</Button>
+                        <Button 
+                            primary
+                            loading={this.state.loading}
+                        >
+                            Create
+                        </Button>
                     </Form>
                 </Layout>
             </div>
