@@ -15,6 +15,7 @@ export default class CampaignShow extends React.Component {
         console.log(summary['0']);
         
         return { 
+            address: props.query.campaign_id,
             minimumContribution: summary['0'],
             balance: summary['1'],
             totalRequests: summary['2'],
@@ -71,7 +72,7 @@ export default class CampaignShow extends React.Component {
                         {this.renderCards()}
                     </Grid.Column>
                     <Grid.Column width={6}>
-                        <ContributeForm />
+                        <ContributeForm address={this.props.address}/>
                     </Grid.Column>
                 </Grid>
             </Layout>
