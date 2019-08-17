@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from '../../components/Layout';
 import Campaign from '../../ethereum/campaign';
 import { Card } from 'semantic-ui-react';
+import web3 from '../../ethereum/web3';
 
 export default class CampaignShow extends React.Component {
     static async getInitialProps(props) {
@@ -40,12 +41,22 @@ export default class CampaignShow extends React.Component {
             {
                 header: minimumContribution,
                 meta: 'Minimum Contribution',
-                description: 'This is the minimum contribution required to join this campaign.'
+                description: 'This is the minimum contribution in wei required to join this campaign.'
             },
             {
                 header: totalRequests,
                 meta: 'Total Requests',
-                description: 'This is the number of requests.'
+                description: 'This is the number of requests to withdraw wei. Requests must be approved by contributors.'
+            },
+            {
+                header: approversCount,
+                meta: 'Number of Contributors',
+                description: 'This is the number of contributors for this campaign.'
+            },
+            {
+                header: web3.utils.fromWei(balance, 'ether'),
+                meta: 'Total funding(eth)',
+                description: 'This is the total funding in ethereum of this campaign'
             }
         ]
         return <Card.Group items={items} />
