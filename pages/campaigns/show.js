@@ -9,14 +9,14 @@ import { Link } from '../../routes';
 export default class CampaignShow extends React.Component {
     static async getInitialProps(props) {
         
-        const campaign = Campaign(props.query.campaign_id);
+        const campaign = Campaign(props.query.address);
 
         const summary = await campaign.methods.getSummary().call();
 
         console.log(summary['0']);
         
         return { 
-            address: props.query.campaign_id,
+            address: props.query.address,
             minimumContribution: summary['0'],
             balance: summary['1'],
             totalRequests: summary['2'],
