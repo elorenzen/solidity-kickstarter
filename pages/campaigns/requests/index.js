@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '../../../components/Layout';
 import { Link } from '../../../routes';
-import { Button } from 'semantic-ui-react';
+import { Button, Table } from 'semantic-ui-react';
 import Campaign from '../../../ethereum/campaign';
 
 export default class RequestIndex extends React.Component {
@@ -11,7 +11,7 @@ export default class RequestIndex extends React.Component {
         const requestCount = await campaign.methods.getRequestsCount().call;
 
         const requests = await Promise.all(
-            Array(parseInt(requestCount)).fill().map((element, index) => {
+            Array(requestCount).fill().map((element, index) => {
                 return campaign.methods.requests(index).call();
             })
         );
@@ -20,6 +20,8 @@ export default class RequestIndex extends React.Component {
     }
 
     render() {
+        const { Header, Row, HeaderCell, Body } = Table;
+
         return (
             <Layout>
                 <h3>REQUEST LIST</h3>
@@ -28,6 +30,34 @@ export default class RequestIndex extends React.Component {
                         <Button primary>Create request</Button>
                     </a>
                 </Link>
+
+                <Table>
+                    <Header>
+                        <Row>
+                            <HeaderCell>
+                                ID
+                            </HeaderCell>
+                            <HeaderCell>
+                                Description
+                            </HeaderCell>
+                            <HeaderCell>
+                                Amount
+                            </HeaderCell>
+                            <HeaderCell>
+                                Recipient
+                            </HeaderCell>
+                            <HeaderCell>
+                                Approval Count
+                            </HeaderCell>
+                            <HeaderCell>
+                                Approve
+                            </HeaderCell>
+                            <HeaderCell>
+                                Finalize
+                            </HeaderCell>
+                        </Row>
+                    </Header>
+                </Table>
             </Layout>
         )
     }
