@@ -3,12 +3,14 @@ import Layout from '../../../components/Layout';
 import { Link } from '../../../routes';
 import { Button, Table } from 'semantic-ui-react';
 import Campaign from '../../../ethereum/campaign';
+import RequestRow from '../../../components/RequestRow';
 
 export default class RequestIndex extends React.Component {
     static async getInitialProps(props) {
         const { address } = props.query;
         const campaign = Campaign(address);
-        const requestCount = await campaign.methods.getRequestsCount().call;
+        const requestCount = await campaign.methods.getRequestsCount().call();
+        const approversCount = await campaign.methods.approversCount().call()
 
         const requests = await Promise.all(
             Array(requestCount).fill().map((element, index) => {
@@ -16,7 +18,21 @@ export default class RequestIndex extends React.Component {
             })
         );
 
-        return { address, requests, requestCount };
+        return { address, requests, requestCount, approversCount };
+    }
+
+    renderRow() {
+        return this.props.requests.map((request, index) => {
+            return (
+                <RequestRow 
+                    request={request} 
+                    key={index}
+                    id={index}
+                    address={this.props.address}
+                    approversCount={this.props.approversCount}
+                />
+            )
+        });
     }
 
     render() {
@@ -34,29 +50,19 @@ export default class RequestIndex extends React.Component {
                 <Table>
                     <Header>
                         <Row>
-                            <HeaderCell>
-                                ID
-                            </HeaderCell>
-                            <HeaderCell>
-                                Description
-                            </HeaderCell>
-                            <HeaderCell>
-                                Amount
-                            </HeaderCell>
-                            <HeaderCell>
-                                Recipient
-                            </HeaderCell>
-                            <HeaderCell>
-                                Approval Count
-                            </HeaderCell>
-                            <HeaderCell>
-                                Approve
-                            </HeaderCell>
-                            <HeaderCell>
-                                Finalize
-                            </HeaderCell>
+                            <HeaderCell>ID</HeaderCell>
+                            <HeaderCell>Description</HeaderCell>
+                            <HeaderCell>Amount</HeaderCell>
+                            <HeaderCell>Recipient</HeaderCell>
+                            <HeaderCell>Approval Count</HeaderCell>
+                            <HeaderCell>Approve</HeaderCell>
+                            <HeaderCell>Finalize</HeaderCell>
                         </Row>
                     </Header>
+
+                    <Body>
+                        {this.renderRow()}
+                    </Body>
                 </Table>
             </Layout>
         )
